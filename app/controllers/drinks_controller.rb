@@ -1,10 +1,12 @@
 class DrinksController < ApplicationController
   before_action :set_drink, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /drinks
   # GET /drinks.json
   def index
-    @drinks = Drink.all
+    set_user
+    @drinks = Drink.where(user_id: @user)
   end
 
   # GET /drinks/1
@@ -24,7 +26,10 @@ class DrinksController < ApplicationController
   # POST /drinks
   # POST /drinks.json
   def create
+    set_user
     @drink = Drink.new(drink_params)
+
+    @drink.user_id = current_user.id
 
     respond_to do |format|
       if @drink.save
@@ -65,6 +70,10 @@ class DrinksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_drink
       @drink = Drink.find(params[:id])
+    end
+
+    def set_user
+      @user = current_user
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
