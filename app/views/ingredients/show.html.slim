@@ -1,0 +1,20 @@
+p#notice= notice
+p
+  strong Name:
+  = @ingredient.name
+p
+  strong Price:
+  = @ingredient.price
+p
+  strong Description:
+  = @ingredient.description
+p
+  strong Appears in drinks:
+  - related_drinks = @ingredient.drinks.map{ |drink| drink }
+  - related_drinks.each do |drink|
+    =link_to drink.name, drink
+
+
+= link_to 'Edit', edit_ingredient_path(@ingredient)
+| \
+= link_to 'Back', ingredients_path

@@ -1,0 +1,20 @@
+p#notice= notice
+p
+  strong Name:
+  = @drink.name
+p
+  strong Price:
+  = @drink.price
+p
+  strong Description:
+  = @drink.description
+p
+  strong Ingredients:
+  - @drink.ingredients.each do |ingredient|
+    =link_to ingredient.name, ingredient
+
+
+
+= link_to 'Edit', edit_drink_path(@drink)
+| \
+= link_to 'Back', drinks_path
